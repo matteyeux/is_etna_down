@@ -11,7 +11,7 @@ ACCESS_KEY = 'c'
 ACCESS_SECRET = 'z'
 
 api = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
-url = "intra.etna-alternance.net"
+url = "https://intra.etna-alternance.net"
 status_file = "status.txt"
 now = str(datetime.datetime.now())
 now = now.split('.')[0]
