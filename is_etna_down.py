@@ -2,13 +2,13 @@
 
 import sys
 import datetime
-import http.client
 from twython import Twython
+from urllib.request import urlopen
 
-CONSUMER_KEY = 'a'
-CONSUMER_SECRET = 'b'
-ACCESS_KEY = 'c'
-ACCESS_SECRET = 'z'
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
+ACCESS_KEY = ''
+ACCESS_SECRET = ''
 
 api = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 url = "https://intra.etna-alternance.net"
@@ -23,17 +23,13 @@ if len(sys.argv) == 2:
 	if sys.argv[1] == "notweet":
 		do_tweet = False
 
-# try to connect to we have HTTP return code
 try:
-	conn = http.client.HTTPConnection(url, timeout=30)
-	conn.request("GET", "/")
-	response = conn.getresponse()
-
-	code = str(response.status)
-	message = response.reason
-except:
-	message = "not available"
+	r = urlopen(url)
+	code = str(r.code)
+	message = "OK"
+except :
 	code = "500" # means no internet @ etna
+	message = "not available"
 
 # open status file to get initial status code
 with open(status_file, 'r') as f:
@@ -61,4 +57,3 @@ if status != str(code):
 
 else:
 	print("state: unchanged")
-
